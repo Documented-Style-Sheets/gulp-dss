@@ -3,12 +3,13 @@
 A gulp plugin to build UI &amp; UX documentation with the DSS parser
 
 ```javascript
-var dss = require('gulp-dss');
+var gulp = require( 'gulp' );
+var dss = require( 'gulp-dss' );
 
-gulp.task('dss', function() {
-  return gulp.src('./source/styles/**/*.{sass,scss}')
-    .pipe( dss({ template: path.join(__dirname, './customTemplate/') }))
-    .pipe(gulp.dest('ui-docs/'));
+gulp.task( 'dss', function() {
+  return gulp.src( './source/styles/**/*.{sass,scss,less,css,js}' )
+    .pipe( dss({ template: './customTemplate/' }))
+    .pipe( gulp.dest( './docs/' ) );
 });
 ```
 
@@ -24,6 +25,28 @@ Default value: `{}`
 An object filled with key value pairs of functions to be used when parsing comment blocks. See the **example** below for more context about how to use these.
 
 **Example**:
+
+```javascript
+var gulp = require( 'gulp' );
+var dss = require( 'gulp-dss' );
+
+var parsers = { 
+  // Finds @link in comment blocks
+  link: function( i, line, block ) {
+
+    // Replace link with HTML wrapped version
+    var exp = /(b(https?|ftp|file)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig;
+    line.replace(exp, "<a href='$1'>$1</a>");
+    return line;
+  }
+};
+
+gulp.task( 'dss', function() {
+  return gulp.src( './source/styles/**/*.{sass,scss,less,css,js}' )
+    .pipe( dss({ parsers: parsers }) )
+    .pipe( gulp.dest( './docs/' ) );
+});
+```
 
 #### options.include_empty_files
 

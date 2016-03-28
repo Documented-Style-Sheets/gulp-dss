@@ -16,11 +16,13 @@
     "url": "https://github.com/DSSWG/gulp-dss/issues"
   },
   "dependencies": {
-    "gulp-util": "2.2.20",
-    "through": "2.3.4",
     "dss": "1.0.4",
+    "gulp-util": "2.2.20",
+    "handlebars": "4.0.5",
+    "jade": "1.11.0",
+    "marked": "0.3.5",
+    "through": "2.3.4"
   },
   "devDependencies": {},
-  "scripts": {},
   "license": "MIT"
 }

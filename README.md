@@ -1,4 +1,4 @@
-# gulp-dss
+# gulp-dss [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![Build Status](https://secure.travis-ci.org/DSSWG/gulp-dss.png?branch=master)](http://travis-ci.org/DSSWG/gulp-dss)
 
 A gulp plugin to build UI &amp; UX documentation with the DSS parser
 
@@ -51,17 +51,18 @@ gulp.task( 'dss', function() {
 #### options.include_empty_files
 
 Type: `Boolean`
-Default value: `true`
+Default value: `false`
 
 Include files without DSS annotations.
 
 ### options.template
 
+Type: `String`
+Default value: `./templates/default/`
+
 The *default* template (found in `templates/default`) unless you specify otherwise with the `templatePath` option. There is support for `.html`, `.jade` &amp; `handlebars` files by default and any files within the `assets` folder will be synced accordingly. 
 
-**Example**:
+**Default Template files:**
 
-#### Default Template files:
-
-`index.jade` - a listing of all components, variables &amp; stats
-`view.jade` - an individual component page 
+    - `index.jade` - a listing of all components, variables &amp; stats
+    - `view.jade` - an individual component page 

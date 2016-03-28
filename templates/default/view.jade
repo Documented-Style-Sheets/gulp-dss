@@ -1,0 +1,61 @@
+htmlhtml
+head
+
+  meta(charset="utf-8")
+
+  meta(http-equiv="X-UA-Compatible", content="IE=edge")
+
+  title project.name
+
+  link(rel="stylesheet", href="/assets/js/prettify/prettify.css", type="text/css")
+
+  link(rel="stylesheet", href="/assets/styles.css", type="text/css")
+
+body
+
+  script(type="text/javascript", src="/assets/styles.js")
+
+  script(type="text/javascript", src="/assets/templates.js")
+
+  script(type="text/javascript", src="/assets/libs.js")
+
+  script(type="text/javascript", src="/assets/main.js")
+
+body.preview(onload="prettyPrint()")
+
+  header
+
+    h1 <strong>DSS</strong> Styleguide Documentation
+
+  div.wrapper
+
+    div.block
+
+      div.info
+
+        h4!= name
+
+        if description
+
+          p.description!= description
+
+        if state
+
+          p.state: span #{name} - #{description}
+
+      if markup
+
+        div.example
+          !{markup.example}
+
+        if state
+
+          div.example.state(class="#{class}")
+
+            div.name!= name
+
+              !{markup.example}
+
+        pre.prettyprint.lang-html.markup!= markup.escaped
+
+  script(src="/assets/js/prettify/prettify.js")

@@ -12,17 +12,29 @@
     "type": "git",
     "url": "https://github.com/DSSWG/gulp-dss"
   },
+  "scripts": {
+    "test": "nodeunit test"
+  },
   "bugs": {
     "url": "https://github.com/DSSWG/gulp-dss/issues"
   },
   "dependencies": {
     "dss": "1.0.4",
+    "gulp": "3.9.1",
     "gulp-util": "2.2.20",
     "handlebars": "4.0.5",
     "jade": "1.11.0",
     "marked": "0.3.5",
-    "through": "2.3.4"
+    "through2": "2.0.1",
+    "vinyl-source-stream": "1.1.0"
   },
   "devDependencies": {},
-  "license": "MIT"
+  "license": "MIT",
+  "standard": {
+    "ignore": [
+      "examples",
+      "docs",
+      "templates"
+    ]
+  }
 }

@@ -1,76 +1,75 @@
-'use strict';
+'use strict'
 
-var Buffer = require( 'buffer' ).Buffer
-var File = require( 'gulp-util' ).File
-var jade = require( 'jade' )
-var marked = require( 'marked' )
-var handlebars = require( 'handlebars' )
-var through = require( 'through' )
-var path = require( 'path' )
-var dss = require( 'dss' )
+var File = require('vinyl')
+var path = require('path')
+var gutil = require('gulp-util')
+var source = require('vinyl-source-stream')
+var jade = require('jade')
+var marked = require('marked')
+var handlebars = require('handlebars')
+var through = require('through2')
+var fs = require('fs')
+var dss = require('dss')
 
-function plugin( opts ) {
+module.exports = function(options) {
 
-  if ( opts === undefined ) {
-    throw new Error('Missing options')
-  }
+  // Setup options
+  options = options || {}
+  var files = []
+  var styleguide = []
+  var template = options.template || './templates/default/'
+  var parsers = options.parsers || {}
+  parsers = Array.prototype.slice.apply(parsers)
 
-  var first = null
-  var contents = null
-  var template = opts.template || path.join(__dirname, 'templates')
+  // Register parsers
+  parsers.forEach(function (name, callback) {
+    dss.parser(name, callback)
+  })
 
-  function process( file ) {
+  // Process files
+  function process (file, encoding, callback) {
 
-    var parseOptions = {}
-
-    dss.parse( file.contents.toString(), parseOptions, function( dssFile ) {
-
-      first = first || file
-      contents = contents || []
-
-      if ( isBlank( dssFile ) ) {
-        return
-      }
-
-      dssFile.blocks.filter( validBlock ).forEach(function( block ) {
-        contents.push( jade.render( 'module.html', block ) )
-      })
-
-      function isBlank( file ) {
-        return file.blocks.length === 0
-      }
-
-      function validBlock( block ) {
-        return block.name !== undefined
-      }
-
-    })
-  }
-
-  function endStream() {
-
-    if ( first ) {
-
-      var joinedPath = path.join(first.base, opts.output);
-      var newFile = new File({
-        cwd: first.cwd,
-        base: first.base,
-        path: joinedPath,
-        contents: new Buffer(wrapContents(contents.join('\n')))
-      });
-
-      this.emit( 'data', newFile )
+    if (file.isNull()) {
+      callback(null, file)
+      return
     }
 
-    this.emit( 'end' )
+    if (file.isStream()) {
+      callback(new gutil.PluginError('gulp-dss', 'Streaming not supported'))
+      return
+    }
+
+    dss.parse(file.contents.toString(), {}, function (parsed) {
+
+      // Add filename
+      parsed.file = file.path
+
+      // Generate files for individual blocks
+      parsed.blocks.forEach(function (block) {
+        console.log( block )
+        var contents = jade.renderFile(template + 'view.jade', block)
+        var path = file.path + '-' + block.name + '.html'
+        var temp = new File({ path: path, contents: new Buffer(contents) })
+        callback(null, temp)
+      })
+
+      // Add file to styleguide object
+      styleguide.push(parsed)
+
+      // Return without the original file
+      callback(null, file)
+
+    })
+
   }
 
-  function wrapContents( content ) {
-    return jade.render( '**/*.jade', { content: content  } )
+  function end (callback) {
+
+    jade.renderFile(template + 'index.jade', { locals: styleguide })
+    callback()
+
   }
 
-  return through( process, endStream )
-
+  return through.obj(process, end)
 }
 
-module.exports = plugin

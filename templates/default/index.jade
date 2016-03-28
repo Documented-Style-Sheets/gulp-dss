@@ -25,11 +25,7 @@ body(onload="prettyPrint()")
 
   header
 
-    h1 #{project.name} styleguide
-
-    p.version v. <strong>#{project.version}</strong>
-
-    p.description #{project.description}
+    h1 <strong>DSS</strong> Styleguide Documentation
 
   div.wrapper
 
@@ -73,7 +69,7 @@ body(onload="prettyPrint()")
 
                 if state
 
-                  div.example.state(class=class)
+                  div.example.state(class="#{class}")
 
                     div.name!= name
 

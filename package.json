@@ -1,0 +1,26 @@
+{
+  "name": "gulp-dss",
+  "version": "0.0.1",
+  "description": "A plugin for Gulp to generate UI documentation with the DSS Parser",
+  "main": "index.js",
+  "author": {
+    "name": "Darcy Clarke",
+    "email": "darcy@darcyclarke.me",
+    "url": "http://darcyclarke.me"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DSSWG/gulp-dss"
+  },
+  "bugs": {
+    "url": "https://github.com/DSSWG/gulp-dss/issues"
+  },
+  "dependencies": {
+    "gulp-util": "2.2.20",
+    "through": "2.3.4",
+    "dss": "1.0.4",
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "license": "MIT"
+}

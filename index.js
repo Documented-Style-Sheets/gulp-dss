@@ -46,7 +46,6 @@ module.exports = function(options) {
 
       // Generate files for individual blocks
       parsed.blocks.forEach(function (block) {
-        console.log( block )
         var contents = jade.renderFile(template + 'view.jade', block)
         var path = file.path + '-' + block.name + '.html'
         var temp = new File({ path: path, contents: new Buffer(contents) })

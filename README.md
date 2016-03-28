@@ -1,5 +1,7 @@
 # gulp-dss [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/) [![Build Status](https://secure.travis-ci.org/DSSWG/gulp-dss.png?branch=master)](http://travis-ci.org/DSSWG/gulp-dss)
 
+## NOTE: This project is still a work-in-progress
+
 A gulp plugin to build UI &amp; UX documentation with the DSS parser
 
 ```javascript
